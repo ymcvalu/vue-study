@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>v-if v-show v-for指令</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>	
+</head>
+<body>
+	<!-- 挂载点 -->
+	<div id="root">
+		<div v-if="show">移除dom组件</div>
+		<div v-show="show">通过css隐藏dom组件</div>
+		<button @click="()=>{show=!show}">toggle</button>
+		<ul>
+			<li v-for="item,idx of list" :key="idx">item{{idx}}:{{item}}</li>
+		</ul>
+	</div>
+	
+	<script type="text/javascript">
+		// 实例
+		new Vue({ 
+			el: "#root",
+			data: {
+				show: true,
+				list: ["green", "yellow", "red"]
+			}, 
+			methods: {
+				 
+			}
+		})
+	</script>
+</body>
+</html>

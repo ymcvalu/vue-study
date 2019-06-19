@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>TodoList</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>	
+</head>
+<body>
+	<!-- 挂载点 -->
+	<div id="root">
+		<div>
+			<input v-model="item"/>
+			<button @click="()=>{items.push(item);item=''}">提交</button>
+		</div>
+		<ul>
+			<!-- 使用组件，通过:content设置组件属性 -->
+			<todo-item 
+				:key="idx" 
+				:content='item'
+				:index="idx"
+				@delete="(idx)=>{items.splice(idx,1)}"
+				v-for="item,idx of items" ></todo-item>
+			<!-- <li :key="idx" v-for="item,idx of items">{{item}}</li> -->
+		</ul>
+	</div>
+	
+	<script type="text/javascript">
+		// Vue.component('todo-item',{
+		// 	template: '<li>item</li>',
+		// })
+
+		var TodoItem  = {
+			props:['content', 'index'], // 组件的属性
+			methods: {
+				onDelete: function(){
+					this.$emit('delete', this.index)
+				},
+			},
+			template: '<li>{{content}} <span @click="onDelete" style="background:gray; color:white">x</span></li>', // 组件模板
+		}
+
+		// 实例
+		new Vue({ 	
+			el: "#root",
+			components: {
+				'todo-item': TodoItem, // 注册组件到vue实例
+			},
+			data: {
+				item:"",
+				items:["haha","ooh"]
+			}
+		})
+	</script>
+</body>
+</html>
